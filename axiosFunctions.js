@@ -13,6 +13,8 @@ axios.interceptors.request.use(config => {
 });
 
 axios.interceptors.response.use(response => {
+  // Remove progress cursor style from body
+  document.body.style.cursor = "default";
   const requestTime = new Date(response.config.metadata.startTime);
   const responseTime = new Date();
   const timeDifference = responseTime - requestTime;
