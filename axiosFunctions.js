@@ -1,8 +1,10 @@
-
-
 import axios from "axios";
 
+
 // Set default headers with your API key
+axios.defaults.headers.common["live_JF5nT6Cv74qsWZaigHNZbkS0DvBbK6GUYehW6sHltEDfuhjW8LX8yts5vZy0743k"] = API_KEY;
+
+// Set default headers with API key
 axios.interceptors.request.use(config => {
   // Reset progress bar
   progressBar.style.width = "0%";
@@ -29,7 +31,7 @@ export function updateProgress(event) {
 
 export async function fetchBreeds() {
   try {
-    const response = await axios.get("https://api.thecatapi.com/v1/breeds", { 
+    const response = await axios.get("https://api.thedogapi.com/v1/breeds", { 
       metadata: { startTime: new Date() },
       onDownloadProgress: updateProgress // Pass updateProgress function to onDownloadProgress
     });
@@ -42,7 +44,7 @@ export async function fetchBreeds() {
 
 export async function fetchBreedImages(breedId) {
   try {
-    const response = await axios.get(`https://api.thecatapi.com/v1/images/search?breed_ids=${breedId}`, { 
+    const response = await axios.get(`https://api.thedogapi.com/v1/images/search?breed_ids=${breedId}`, { 
       metadata: { startTime: new Date() },
       onDownloadProgress: updateProgress // Pass updateProgress function to onDownloadProgress
     });
@@ -56,14 +58,14 @@ export async function fetchBreedImages(breedId) {
 export async function favourite(imgId) {
   try {
     // Check if the image is already favorited
-    const response = await axios.get(`https://api.thecatapi.com/v1/favourites?image_id=${imgId}`);
+    const response = await axios.get(`https://api.thedogapi.com/v1/favourites?image_id=${imgId}`);
     if (response.data.length > 0) {
       // If already favorited, delete the favorite (toggle behavior)
-      await axios.delete(`https://api.thecatapi.com/v1/favourites/${response.data[0].id}`);
+      await axios.delete(`https://api.thedogapi.com/v1/favourites/${response.data[0].id}`);
       console.log(`Unfavorited image with ID: ${imgId}`);
     } else {
       // If not favorited, add it to favorites
-      await axios.post("https://api.thecatapi.com/v1/favourites", { image_id: imgId });
+      await axios.post("https://api.thedogapi.com/v1/favourites", { image_id: imgId });
       console.log(`Favorited image with ID: ${imgId}`);
     }
   } catch (error) {
@@ -75,7 +77,7 @@ export async function favourite(imgId) {
 export async function getFavourites() {
   try {
     // Fetch all favorites
-    const response = await axios.get("https://api.thecatapi.com/v1/favourites");
+    const response = await axios.get("https://api.thedogapi.com/v1/favourites");
     const favorites = response.data;
     
     // Clear the carousel
