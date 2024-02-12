@@ -21,7 +21,7 @@ axios.interceptors.response.use(response => {
 });
 
 // Function to update progress bar
-function updateProgress(event) {
+export function updateProgress(event) {
   const progress = (event.loaded / event.total) * 100;
   progressBar.style.width = `${progress}%`;
 }
