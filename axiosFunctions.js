@@ -3,12 +3,11 @@
 import axios from "axios";
 
 // Set default headers with your API key
-axios.defaults.headers.common["x-api-key"] = API_KEY;
-
-// Axios interceptors
 axios.interceptors.request.use(config => {
   // Reset progress bar
   progressBar.style.width = "0%";
+  // Set body cursor style to progress
+  document.body.style.cursor = "progress";
   return config;
 });
 
