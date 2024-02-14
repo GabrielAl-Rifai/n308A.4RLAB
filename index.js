@@ -1,5 +1,5 @@
 
-
+// import { fetchBreeds, fetchBreedImages } from "./axiosFunctions.js";
 // The breed selection input element.
 const breedSelect = document.getElementById("breedSelect");
 // The information section div element.
@@ -10,9 +10,9 @@ const progressBar = document.getElementById("progressBar");
 const getFavouritesBtn = document.getElementById("getFavouritesBtn");
 
 // Step 0: Store your API key here for reference and easy access.
-const API_KEY = "";
+const API_KEY = "live_JF5nT6Cv74qsWZaigHNZbkS0DvBbK6GUYehW6sHltEDfuhjW8LX8yts5vZy0743k";
 
-import { fetchBreeds, fetchBreedImages } from "./axiosFunctions.js";
+
 
 
 /**
@@ -23,6 +23,9 @@ import { fetchBreeds, fetchBreedImages } from "./axiosFunctions.js";
  *  - Each option should display text equal to the name of the breed.
  * This function should execute immediately.
  */
+
+
+// Update initialLoad function to use fetchBreeds function
 async function initialLoad() {
   try {
     const breeds = await fetchBreeds();
@@ -37,6 +40,7 @@ async function initialLoad() {
     console.error("Error loading breeds:", error);
   }
 }
+
 
 // Call the initialLoad function immediately
 initialLoad();
@@ -56,6 +60,20 @@ initialLoad();
  * - Add a call to this function to the end of your initialLoad function above to create the initial carousel.
  */
 
+
+
+// Function to handle the click event on the "Fetch Breeds" button
+async function handleFetchBreeds() {
+  try {
+    // Call the fetchBreeds function from axiosFunctions module to fetch dog breeds
+    const breeds = await axiosFunctions.fetchBreeds();
+    // Display the list of breeds in the dropdown menu
+    displayBreeds(breeds);
+  } catch (error) {
+    console.error("Error fetching breeds:", error);
+  }
+}
+
 // Update breedSelect event handler to use fetchBreedImages function
 breedSelect.addEventListener("change", async () => {
   try {
@@ -65,17 +83,17 @@ breedSelect.addEventListener("change", async () => {
     const breedId = breedSelect.value;
     const data = await fetchBreedImages(breedId);
 
-    data.forEach(cat => {
-      const carouselItem = Carousel.createCarouselItem(cat.url, cat.breeds[0].name, cat.id);
+    data.forEach(dog => {
+      const carouselItem = Carousel.createCarouselItem(dog.url, dog.breeds[0].name,dog.id);
       Carousel.appendCarousel(carouselItem);
 
       const info = document.createElement("div");
       info.classList.add("breed-info");
       info.innerHTML = `
-        <h3>${cat.breeds[0].name}</h3>
-        <p><strong>Life Span:</strong> ${cat.breeds[0].life_span}</p>
-        <p><strong>Origin:</strong> ${cat.breeds[0].origin}</p>
-        <p><strong>Description:</strong> ${cat.breeds[0].description}</p>
+        <h3>${dog.breeds[0].name}</h3>
+        <p><strong>Life Span:</strong> ${dog.breeds[0].life_span}</p>
+        <p><strong>Origin:</strong> ${dog.breeds[0].origin}</p>
+        <p><strong>Description:</strong> ${dog.breeds[0].description}</p>
       `;
       infoDump.appendChild(info);
     });
@@ -96,6 +114,19 @@ getFavouritesBtn.addEventListener("click", async () => {
   }
 });
 
+
+
+
+
+
+
+
+
+
+
+// export async function favourite(imgId) {
+//   // your code here
+// }
 /**
  * 3. Fork your own sandbox, creating a new one named "JavaScript Axios Lab."
  */
@@ -147,9 +178,6 @@ getFavouritesBtn.addEventListener("click", async () => {
  *   you delete that favourite using the API, giving this function "toggle" functionality.
  * - You can call this function by clicking on the heart at the top right of any image.
  */
-export async function favourite(imgId) {
-  // your code here
-}
 
 /**
  * 9. Test your favourite() function by creating a getFavourites() function.

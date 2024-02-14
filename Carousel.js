@@ -1,15 +1,13 @@
-import * as bootstrap from "bootstrap";
-import { favourite } from "./index.js";
-import { updateProgress } from "./axiosFunctions.js";
 
-xport async function favourite(imgId) {
+
+export async function favourite(imgId) {
   try {
-    const response = await axios.get(`https://api.thecatapi.com/v1/favourites?image_id=${imgId}`);
+    const response = await axios.get(`https://api.thedogapi.comm/v1/favourites?image_id=${imgId}`);
     if (response.data.length > 0) {
-      await axios.delete(`https://api.thecatapi.com/v1/favourites/${response.data[0].id}`);
+      await axios.delete(`https://api.thedogapi.com/v1/favourites/${response.data[0].id}`);
       console.log(`Unfavorited image with ID: ${imgId}`);
     } else {
-      await axios.post("https://api.thecatapi.com/v1/favourites", { image_id: imgId });
+      await axios.post("https://api.thedogapi.com/v1/favourites", { image_id: imgId });
       console.log(`Favorited image with ID: ${imgId}`);
     }
   } catch (error) {
